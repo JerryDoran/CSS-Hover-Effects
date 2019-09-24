@@ -1,0 +1,217 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.fancy-link {
+  text-decoration: none;
+  color: #ee6352;
+
+  // The pseudo elements will be positioned relative to this parent element.
+  position: relative;
+}
+
+.fancy-link::after {
+  // Always need to sent a 'content' property for pseudo elements.
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+
+  // Takes on the current color of the parent element.
+  background-color: currentColor;
+
+  // Shows the width of the pseudo element in the X-direction
+  transform: scaleX(0);
+
+  // Move the underlined pseudo element over to the right once the mouse is moved off of it.
+  transform-origin: right;
+  transition: transform 0.25s ease-in;
+}
+
+.fancy-link:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.button {
+  position: relative;
+  cursor: pointer;
+  border: 0;
+  background: #ee6352;
+  color: white;
+  padding: 1em 1.5em;
+
+  // Resets stacking context of the page so that pseudo element will stack within the context
+  // of the button and not the document itself.
+  z-index: 1;
+}
+
+.button {
+  margin-left: 1em;
+}
+
+.button::after {
+  content: '';
+  position: absolute;
+
+  // Position it to cover the button
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+
+  // Push to the background of button element.  It is within the stacking context of the button
+  z-index: -1;
+
+  transition: transform 0.2s ease-in;
+}
+
+.button-one::after {
+  transform: scaleX(0);
+
+  // Start the effect from the left hand side of this button
+  transform-origin: right;
+}
+
+.button-one:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.button-two::after {
+  transform: scaleY(0);
+
+  // Start the effect from the left hand side of this button
+  transform-origin: bottom;
+}
+
+.button-two:hover::after {
+  transform: scaleY(1);
+  transform-origin: top;
+}
+
+.button-three::after {
+  transform: scale(0);
+}
+
+.button-three:hover::after {
+  transform: scale(1);
+}
+
+.button-four::after {
+  transform: scale(0);
+  transform-origin: bottom right;
+}
+
+.button-four:hover::after {
+  transform: scale(1);
+  transform-origin: top left;
+}
+
+.card {
+  padding: 2rem;
+
+  /* placeholder image */
+  background-image: url(https://unsplash.it/600);
+
+  background-size: cover;
+  background-color: #444;
+  background-blend-mode: multiply;
+  color: white;
+  text-align: left;
+
+  .card__title {
+    position: relative;
+    z-index: 1;
+    display: inline-block;
+    margin-bottom: 1rem;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: -0.25rem;
+      left: -2rem;
+      bottom: -0.25rem;
+      width: calc(100% + 4rem);
+      background: #ee6352;
+      z-index: -1;
+
+      transform: scaleX(0.075);
+      transform-origin: left;
+      transition: transform 0.25s ease-in;
+    }
+  }
+
+  &:hover .card__title::after {
+    transform: scaleX(1);
+  }
+
+  &:hover .card__body::after {
+    transform: scaleY(1);
+  }
+
+  &:hover .card__body {
+    color: black;
+  }
+
+  .card__body {
+    color: transparent;
+    position: relative;
+    z-index: 1;
+    margin: 0;
+    transition: color 0.15s;
+    transition-delay: 0.35s;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: -0.75rem;
+      bottom: -0.75rem;
+      left: -0.75rem;
+      right: -0.75rem;
+      background: white;
+      z-index: -1;
+      transform: scaleY(0);
+      transition: transform 0.25s ease-in;
+      transition-delay: 0.25s;
+      transform-origin: top;
+    }
+  }
+}
+
+body {
+  font-family: basic-sans, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.125em;
+  line-height: 1.6;
+  color: #333;
+  background: #ddd;
+}
+
+.content {
+  background: white;
+  width: 70vw;
+  padding: 3em;
+  box-shadow: 0 0 3em rgba(0, 0, 0, 0.15);
+  text-align: center;
+  margin-bottom: 1em;
+}
+
+.title {
+  margin: 0 0 0.5em;
+  text-transform: uppercase;
+  font-weight: 900;
+  font-style: italic;
+  font-size: 3rem;
+  color: #ee6352;
+  line-height: 0.8;
+}
